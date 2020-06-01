@@ -13077,7 +13077,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Wrangle-and-Analyze-Data">Wrangle and Analyze Data<a class="anchor-link" href="#Wrangle-and-Analyze-Data">&#182;</a></h1><h4 id="Case-Study-with-WeRateDogs-Twitter-Dataset">Case Study with WeRateDogs Twitter Dataset<a class="anchor-link" href="#Case-Study-with-WeRateDogs-Twitter-Dataset">&#182;</a></h4>
+<h1 id="Wrangle-and-Analyze-Data">Wrangle and Analyze Data<a class="anchor-link" href="#Wrangle-and-Analyze-Data">&#182;</a></h1><h4 id="Wrangling-report">Wrangling report<a class="anchor-link" href="#Wrangling-report">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -13135,16 +13135,16 @@ div#notebook {
 </li>
 <li><p>different number of retweets depending on how to filter for it</p>
 </li>
+<li><p>only predictions with highest pobability are neede</p>
+</li>
+<li><p>retweets and replies included but not needed</p>
+</li>
 </ul>
 <p><strong>Observations on tidiness</strong></p>
 <ul>
 <li><p>last 4 columns can be replaced with one</p>
 </li>
 <li><p>this data can be combined in 1 table instead of 3</p>
-</li>
-<li><p>only predictions with highest pobability are neede</p>
-</li>
-<li><p>retweets and replies included but not needed</p>
 </li>
 </ul>
 
@@ -13162,7 +13162,9 @@ div#notebook {
 </li>
 <li><p>join all tables on <code>tweet_id</code></p>
 </li>
-<li><p>remove rows with denominator of 0 if any</p>
+<li><p>parse ratings from text accurately</p>
+</li>
+<li><p>calculate a rating score</p>
 </li>
 <li><p>replace wrong dog names with <code>None</code></p>
 </li>
@@ -13170,232 +13172,11 @@ div#notebook {
 </li>
 <li><p>change <code>timestamp</code> type to <code>datetime</code></p>
 </li>
-<li><p>combine <code>["doggo", "floofer", "pupper", "puppo"]</code> columns into one as <code>stage</code></p>
+<li><p>combine <code>["doggo", "floofer", "pupper", "puppo"]</code> columns into one as <code>stage</code>, renaming multiple stages to <a href="https://i.imgur.com/WeeuxcC.png">chimera</a>.</p>
 </li>
-<li><p>add new stage <a href="https://i.imgur.com/WeeuxcC.png">chimera</a> in case of multiple stages,</p>
-</li>
-<li><p>calculate a rating score</p>
+<li><p>remove low confidence predictions</p>
 </li>
 </ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Analysis-and-Visualisation">Analysis and Visualisation<a class="anchor-link" href="#Analysis-and-Visualisation">&#182;</a></h2><p>In this section I provided some insight into the data at hand by answering a few question.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="How-many-submissions-are-real-dogs?">How many submissions are real dogs?<a class="anchor-link" href="#How-many-submissions-are-real-dogs?">&#182;</a></h3><p>True dog percentage: 74.06%</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Top-10-rated-dogs">Top 10 rated dogs<a class="anchor-link" href="#Top-10-rated-dogs">&#182;</a></h3><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>tweet_id</th>
-      <th>name</th>
-      <th>stage</th>
-      <th>p1_dog</th>
-      <th>rating_score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>749981277374128128</td>
-      <td>Atticus</td>
-      <td>None</td>
-      <td>False</td>
-      <td>177.600000</td>
-    </tr>
-    <tr>
-      <td>670842764863651840</td>
-      <td>None</td>
-      <td>None</td>
-      <td>False</td>
-      <td>42.000000</td>
-    </tr>
-    <tr>
-      <td>786709082849828864</td>
-      <td>Logan</td>
-      <td>None</td>
-      <td>True</td>
-      <td>7.500000</td>
-    </tr>
-    <tr>
-      <td>810984652412424192</td>
-      <td>Sam</td>
-      <td>None</td>
-      <td>True</td>
-      <td>3.428571</td>
-    </tr>
-    <tr>
-      <td>778027034220126208</td>
-      <td>Sophie</td>
-      <td>pupper</td>
-      <td>True</td>
-      <td>2.700000</td>
-    </tr>
-    <tr>
-      <td>680494726643068929</td>
-      <td>None</td>
-      <td>None</td>
-      <td>True</td>
-      <td>2.600000</td>
-    </tr>
-    <tr>
-      <td>870063196459192321</td>
-      <td>Clifford</td>
-      <td>None</td>
-      <td>False</td>
-      <td>1.400000</td>
-    </tr>
-    <tr>
-      <td>863079547188785154</td>
-      <td>None</td>
-      <td>None</td>
-      <td>True</td>
-      <td>1.400000</td>
-    </tr>
-    <tr>
-      <td>864873206498414592</td>
-      <td>None</td>
-      <td>None</td>
-      <td>False</td>
-      <td>1.400000</td>
-    </tr>
-    <tr>
-      <td>807621403335917568</td>
-      <td>Ollie</td>
-      <td>pupper</td>
-      <td>True</td>
-      <td>1.400000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Images-of-the-top-3-dogs">Images of the top 3 dogs<a class="anchor-link" href="#Images-of-the-top-3-dogs">&#182;</a></h3><p><img src="wrangle_act_files/wrangle_act_49_0.png" alt="png"></p>
-<p><img src="wrangle_act_files/wrangle_act_50_0.png" alt="png"></p>
-<p><img src="wrangle_act_files/wrangle_act_51_0.png" alt="png"></p>
-<p>Even for top dogs, not all are real, and it seems like the dog detection model is not always reliable as well.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="At-which-stage-does-a-dog-get-better-ratings?">At which stage does a dog get better ratings?<a class="anchor-link" href="#At-which-stage-does-a-dog-get-better-ratings?">&#182;</a></h3><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>stage</th>
-      <th>rating_score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>puppo</th>
-      <td>1.200000</td>
-    </tr>
-    <tr>
-      <th>floofer</th>
-      <td>1.200000</td>
-    </tr>
-    <tr>
-      <th>doggo</th>
-      <td>1.188889</td>
-    </tr>
-    <tr>
-      <th>None</th>
-      <td>1.180192</td>
-    </tr>
-    <tr>
-      <th>chimera</th>
-      <td>1.118182</td>
-    </tr>
-    <tr>
-      <th>pupper</th>
-      <td>1.071429</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Source-of-submissions">Source of submissions<a class="anchor-link" href="#Source-of-submissions">&#182;</a></h3><p>*Twitter for iPhone: 98.04%</p>
-<p>*Twitter Web Client: 1.40%</p>
-<p>*TweetDeck: 0.55%</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Retweet-vs-Favorite-Count">Retweet vs Favorite Count<a class="anchor-link" href="#Retweet-vs-Favorite-Count">&#182;</a></h3><p><img src="wrangle_act_files/wrangle_act_59_0.png" alt="png"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Rating-Distribution">Rating Distribution<a class="anchor-link" href="#Rating-Distribution">&#182;</a></h3><ul>
-<li>For all values:</li>
-</ul>
-<p><img src="wrangle_act_files/wrangle_act_61_0.png" alt="png"></p>
-<ul>
-<li>For [0,5] range:</li>
-</ul>
-<p><img src="wrangle_act_files/wrangle_act_62_0.png" alt="png"></p>
 
 </div>
 </div>
@@ -13410,6 +13191,40 @@ div#notebook {
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
+<span class="n">call</span><span class="p">([</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;nbconvert&quot;</span><span class="p">,</span> <span class="s2">&quot;wrangle_report.ipynb&quot;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[1]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">

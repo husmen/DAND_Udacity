@@ -13102,7 +13102,7 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Top-10-rated-dogs">Top 10 rated dogs<a class="anchor-link" href="#Top-10-rated-dogs">&#182;</a></h3><p>I learned that by simply reordering the <code>DataFrame</code> according to the score values calculated during the cleaning phase, and then slicing it to diplay the top 10 results and only the desired columns.</p>
-<p>The top 2 or 3 seem to be outliers, probably we should have removed them in the cleaning phase.</p>
+<p>The top 2 seem to be outliers, removing them would be better for training a rating prediction model.</p>
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -13120,8 +13120,10 @@ div#notebook {
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
+      <th></th>
       <th>tweet_id</th>
       <th>name</th>
+      <th>jpg_url</th>
       <th>stage</th>
       <th>p1_dog</th>
       <th>rating_score</th>
@@ -13129,72 +13131,92 @@ div#notebook {
   </thead>
   <tbody>
     <tr>
+      <th>802</th>
       <td>749981277374128128</td>
       <td>Atticus</td>
+      <td>https://pbs.twimg.com/media/CmgBZ7kWcAAlzFD.jpg</td>
       <td>None</td>
       <td>False</td>
       <td>177.600000</td>
     </tr>
     <tr>
+      <th>1795</th>
       <td>670842764863651840</td>
       <td>None</td>
+      <td>https://pbs.twimg.com/media/CU9P717W4AAOlKx.jpg</td>
       <td>None</td>
       <td>False</td>
       <td>42.000000</td>
     </tr>
     <tr>
-      <td>786709082849828864</td>
-      <td>Logan</td>
-      <td>None</td>
-      <td>True</td>
-      <td>7.500000</td>
-    </tr>
-    <tr>
+      <th>415</th>
       <td>810984652412424192</td>
       <td>Sam</td>
+      <td>https://pbs.twimg.com/media/C0EyPZbXAAAceSc.jpg</td>
       <td>None</td>
       <td>True</td>
       <td>3.428571</td>
     </tr>
     <tr>
-      <td>778027034220126208</td>
-      <td>Sophie</td>
+      <th>159</th>
+      <td>854120357044912130</td>
+      <td>None</td>
+      <td>https://pbs.twimg.com/media/C9px7jyVwAAnmwN.jpg</td>
       <td>pupper</td>
       <td>True</td>
-      <td>2.700000</td>
+      <td>1.400000</td>
     </tr>
     <tr>
-      <td>680494726643068929</td>
-      <td>None</td>
+      <th>357</th>
+      <td>819006400881917954</td>
+      <td>Sunny</td>
+      <td>https://pbs.twimg.com/media/C12x-JTVIAAzdfl.jpg</td>
+      <td>doggo</td>
+      <td>False</td>
+      <td>1.400000</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>878057613040115712</td>
+      <td>Emmy</td>
+      <td>https://pbs.twimg.com/media/DC98vABUIAA97pz.jpg</td>
       <td>None</td>
       <td>True</td>
-      <td>2.600000</td>
+      <td>1.400000</td>
     </tr>
     <tr>
-      <td>870063196459192321</td>
-      <td>Clifford</td>
+      <th>137</th>
+      <td>860184849394610176</td>
+      <td>None</td>
+      <td>https://pbs.twimg.com/media/C-_9jWWUwAAnwkd.jpg</td>
       <td>None</td>
       <td>False</td>
       <td>1.400000</td>
     </tr>
     <tr>
-      <td>863079547188785154</td>
+      <th>37</th>
+      <td>884441805382717440</td>
       <td>None</td>
+      <td>https://pbs.twimg.com/media/DEYrIZwWsAA2Wo5.jpg</td>
       <td>None</td>
       <td>True</td>
       <td>1.400000</td>
     </tr>
     <tr>
-      <td>864873206498414592</td>
-      <td>None</td>
-      <td>None</td>
-      <td>False</td>
+      <th>358</th>
+      <td>819004803107983360</td>
+      <td>Bo</td>
+      <td>https://pbs.twimg.com/media/C12whDoVEAALRxa.jpg</td>
+      <td>doggo</td>
+      <td>True</td>
       <td>1.400000</td>
     </tr>
     <tr>
-      <td>807621403335917568</td>
-      <td>Ollie</td>
-      <td>pupper</td>
+      <th>609</th>
+      <td>778408200802557953</td>
+      <td>None</td>
+      <td>https://pbs.twimg.com/media/Cs12ICuWAAECNRy.jpg</td>
+      <td>None</td>
       <td>True</td>
       <td>1.400000</td>
     </tr>
@@ -13215,9 +13237,9 @@ div#notebook {
 <li><p>The dog breed predition model itself is not always reliable.</p>
 </li>
 </ul>
-<p><img src="wrangle_act_files/wrangle_act_49_0.png" alt="png">
-<img src="wrangle_act_files/wrangle_act_50_0.png" alt="png">
-<img src="wrangle_act_files/wrangle_act_51_0.png" alt="png"></p>
+<p><img src="wrangle_act_files/wrangle_act_83_0.png" alt="png">
+<img src="wrangle_act_files/wrangle_act_84_0.png" alt="png">
+<img src="wrangle_act_files/wrangle_act_85_0.png" alt="png"></p>
 
 </div>
 </div>
@@ -13244,8 +13266,12 @@ div#notebook {
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th>stage</th>
+      <th></th>
       <th>rating_score</th>
+    </tr>
+    <tr>
+      <th>stage</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -13263,7 +13289,7 @@ div#notebook {
     </tr>
     <tr>
       <th>None</th>
-      <td>1.180192</td>
+      <td>1.175954</td>
     </tr>
     <tr>
       <th>chimera</th>
@@ -13271,7 +13297,7 @@ div#notebook {
     </tr>
     <tr>
       <th>pupper</th>
-      <td>1.071429</td>
+      <td>1.063680</td>
     </tr>
   </tbody>
 </table>
@@ -13299,7 +13325,7 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Retweet-vs-Favorite-Count">Retweet vs Favorite Count<a class="anchor-link" href="#Retweet-vs-Favorite-Count">&#182;</a></h3><p>It is interesting to know what kind of correlation there is between these 2 variables. coming as no surprise to anyone, they are highly correlated.</p>
-<p><img src="wrangle_act_files/wrangle_act_59_0.png" alt="png"></p>
+<p><img src="wrangle_act_files/wrangle_act_95_0.png" alt="png"></p>
 
 </div>
 </div>
@@ -13307,32 +13333,19 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Rating-Distribution">Rating Distribution<a class="anchor-link" href="#Rating-Distribution">&#182;</a></h3><p>Another interesting aspect of the data is the distribution of the ratings, trying to plot the whole range didn't result in a clear enough graph, so instead I went with the <code>[0, 5]</code>.
-I feel sorry for the few good boys who got a rating of less than 1!</p>
+<h3 id="Rating-Distribution">Rating Distribution<a class="anchor-link" href="#Rating-Distribution">&#182;</a></h3><p>Another interesting aspect of the data is the distribution of the ratings, trying to plot the whole range didn't result in a clear enough graph, so instead I went with the <code>[0, 2]</code>. The range was chosen based on the results for top 10.
+I feel sorry for the few good boys who got a rating of less than 10/10!</p>
 <ul>
 <li>For all values:</li>
 </ul>
-<p><img src="wrangle_act_files/wrangle_act_61_0.png" alt="png"></p>
+<p><img src="wrangle_act_files/wrangle_act_98_0.png" alt="png"></p>
 <ul>
-<li>For [0,5] range:</li>
+<li>For [0,2] range:</li>
 </ul>
-<p><img src="wrangle_act_files/wrangle_act_62_0.png" alt="png"></p>
+<p><img src="wrangle_act_files/wrangle_act_100_0.png" alt="png"></p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
 </div>
     </div>
   </div>
